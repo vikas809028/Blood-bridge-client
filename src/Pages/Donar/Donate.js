@@ -104,7 +104,7 @@ const Donate = () => {
 
     doc.save(`blood-donation-certificate-${user?.name || "donor"}.pdf`);
     onClose();
-    navigate("/donation");
+    navigate("/donar/donation");
   };
 
   return (

@@ -5,8 +5,9 @@ import API from "../../Services/API";
 import { useSelector } from "react-redux";
 import { FiUsers, FiDroplet, FiCalendar, FiMail, FiUser } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
+import toast from "react-hot-toast";
 
-const OrganizationDonar = () => {
+const PendingDonations = () => {
   const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
   const [orgName, setOrgName] = useState("");
@@ -17,7 +18,7 @@ const OrganizationDonar = () => {
     try {
       setIsLoading(true);
       if (user) {
-        const res = await API.post("/organisation/get-donar", {
+        const res = await API.post("/organisation/get-pending-donations", {
           id: user._id,
         });
         if (res.data.success) {
@@ -32,28 +33,51 @@ const OrganizationDonar = () => {
     }
   };
 
+  const handleBloodCollection = async (orgInventoryId,userInventoryId) => {
+    try {
+      setIsLoading(true);
+      const { data } = await API.post("/organisation/collect-blood", {
+        orgInventoryId,
+        userInventoryId
+      });
+
+      if (data.success) {
+        toast.success("Blood collected successfully!");
+        getDonars(); 
+      } else {
+        toast.error(data.message || "Failed to collect blood");
+      }
+    } catch (error) {
+      console.error("Error collecting blood:", error);
+      toast.error("An error occurred while collecting blood");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     getDonars();
   }, [user]);
 
-  const filteredData = data.filter((donor) =>
-    donor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    donor.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    donor.address.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = data.filter(
+    (donor) =>
+      donor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      donor.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      donor.bloodGroup.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getBloodGroupColor = (bloodGroup) => {
     const colors = {
-      'O+': 'bg-red-100 text-red-800',
-      'O-': 'bg-red-200 text-red-900',
-      'A+': 'bg-blue-100 text-blue-800',
-      'A-': 'bg-blue-200 text-blue-900',
-      'B+': 'bg-green-100 text-green-800',
-      'B-': 'bg-green-200 text-green-900',
-      'AB+': 'bg-purple-100 text-purple-800',
-      'AB-': 'bg-purple-200 text-purple-900',
+      "O+": "bg-red-100 text-red-800",
+      "O-": "bg-red-200 text-red-900",
+      "A+": "bg-blue-100 text-blue-800",
+      "A-": "bg-blue-200 text-blue-900",
+      "B+": "bg-green-100 text-green-800",
+      "B-": "bg-green-200 text-green-900",
+      "AB+": "bg-purple-100 text-purple-800",
+      "AB-": "bg-purple-200 text-purple-900",
     };
-    return colors[bloodGroup] || 'bg-gray-100 text-gray-800';
+    return colors[bloodGroup] || "bg-gray-100 text-gray-800";
   };
 
   return (
@@ -63,7 +87,10 @@ const OrganizationDonar = () => {
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
               <FiUsers className="inline mr-2" />
-              Donors for <span className="text-blue-600">{orgName || "your organization"}</span>
+              Donors for{" "}
+              <span className="text-blue-600">
+                {orgName || "your organization"}
+              </span>
             </h1>
             <p className="text-gray-600 mt-2">
               View and manage all blood donation records
@@ -100,18 +127,26 @@ const OrganizationDonar = () => {
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <div className="flex items-center">
-                        <FiDroplet className="mr-2" /> Email
-                      </div>
-                    </th>
-                
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <div className="flex items-center">
-                        <FiMail className="mr-2" /> Contact
+                        <FiDroplet className="mr-2" /> Blood Group
                       </div>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Quantity (ml)
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <div className="flex items-center">
-                        <FiCalendar className="mr-2" /> Address
+                        <FiMail className="mr-2" /> Email
+                      </div>
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <div className="flex items-center">
+                        <FiCalendar className="mr-2" /> Donation Date
+                      </div>
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <div className="flex items-center">
+                        <FiCalendar className="mr-2" />
+                        Status
                       </div>
                     </th>
                   </tr>
@@ -123,7 +158,9 @@ const OrganizationDonar = () => {
                         <div className="flex flex-col items-center justify-center py-12">
                           <FiUsers className="text-4xl text-gray-400 mb-4" />
                           <p className="text-gray-500 text-lg">
-                            {searchTerm ? "No matching donors found" : "No donor records available"}
+                            {searchTerm
+                              ? "No matching donors found"
+                              : "No donor records available"}
                           </p>
                           {searchTerm && (
                             <button
@@ -138,7 +175,10 @@ const OrganizationDonar = () => {
                     </tr>
                   ) : (
                     filteredData.map((record, index) => (
-                      <tr key={index} className="hover:bg-gray-50 transition-colors">
+                      <tr
+                        key={index}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium">
@@ -152,16 +192,35 @@ const OrganizationDonar = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getBloodGroupColor(record.bloodGroup)}`}>
-                            {record.email}
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getBloodGroupColor(
+                              record.bloodGroup
+                            )}`}
+                          >
+                            {record.bloodGroup}
                           </span>
                         </td>
-                       
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {record.phone}
+                          <span className="font-medium">
+                            {record.quantity} ml
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {record.address}
+                          {record.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {moment(record.donatedAt).format(
+                            "MMM D, YYYY h:mm A"
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => handleBloodCollection(record.orgInventoryId,record.userInventoryId)}
+                            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors"
+                            disabled={isLoading}
+                          >
+                            {isLoading ? "Processing..." : "Collect Blood"}
+                          </button>
                         </td>
                       </tr>
                     ))
@@ -173,7 +232,8 @@ const OrganizationDonar = () => {
             {filteredData.length > 0 && (
               <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
                 <div className="text-sm text-gray-500">
-                  Showing <span className="font-medium">{filteredData.length}</span> of{' '}
+                  Showing{" "}
+                  <span className="font-medium">{filteredData.length}</span> of{" "}
                   <span className="font-medium">{data.length}</span> donors
                 </div>
                 <div className="flex space-x-2">
@@ -199,4 +259,4 @@ const OrganizationDonar = () => {
   );
 };
 
-export default OrganizationDonar;
+export default PendingDonations;

@@ -15,40 +15,58 @@ const Sidebar = () => {
 
   const donorMenu = [
     { to: "/donar", icon: FaBuilding, label: "Home" },
-    { to: "/donation", icon: FaBuilding, label: "Donation" },
-    { to: "/donate", icon: FaBuilding, label: "Donate" },
-    { to: "/purchase", icon: FaBuilding, label: "Purchase" },
-    { to: "/hos-analytics", icon: FaBuilding, label: "Analytics" },
+    { to: "/donor/donation", icon: FaBuilding, label: "Donation" },
+    { to: "/donor/donate", icon: FaBuilding, label: "Donate" },
+    { to: "/donor/purchase", icon: FaBuilding, label: "Purchase" },
+    { to: "/donor/analytics", icon: FaBuilding, label: "Analytics" },
   ];
 
   const adminMenu = [
     { to: "/admin", icon: FaBuilding, label: "Home" },
-    { to: "/donar-list", icon: FaWarehouse, label: "Donar List" },
+    { to: "/admin/donars", icon: FaWarehouse, label: "Donar List" },
     {
-      to: "/hospital-list",
+      to: "/admin/hospitals",
       icon: FaHandHoldingMedical,
       label: "Hospital List",
     },
-    { to: "/org-list", icon: FaHospital, label: "Organisation List" },
-    { to: "/admin-analytics", icon: FaBuilding, label: "Analytics" },
+    {
+      to: "/admin/organizations",
+      icon: FaHospital,
+      label: "Organisation List",
+    },
+    { to: "/admin/analytics", icon: FaBuilding, label: "Analytics" },
   ];
 
   const hospitalMenu = [
     { to: "/hospital", icon: FaBuilding, label: "Home" },
-    { to: "/consumer", icon: FaBuilding, label: "consumer" },
-    { to: "/hospital-analytics", icon: FaBuilding, label: "Analytics" },
+    { to: "/hospital/consumer", icon: FaBuilding, label: "consumer" },
+    { to: "/hospital/analytics", icon: FaBuilding, label: "Analytics" },
     {
-      to: "/get-orgnaisation-for-hospital",
+      to: "/hospital/organizations",
       icon: FaBuilding,
       label: "Organisation",
     },
   ];
 
   const organisationMenu = [
-    { to: "/organisation", icon: FaWarehouse, label: "Home" },
-    { to: "/orgdonors", icon: FaHandHoldingMedical, label: "Donar" },
-    { to: "/orgconsumers", icon: FaHandHoldingMedical, label: "Consumers" },
-    { to: "/organalytics", icon: FaHospital, label: "Analytics" },
+    { to: "/organization", icon: FaWarehouse, label: "Home" },
+    { to: "/organization/donor", icon: FaWarehouse, label: "Donar" },
+    {
+      to: "/organization/donations",
+      icon: FaHandHoldingMedical,
+      label: "Donations",
+    },
+    {
+      to: "/organization/donationrequests",
+      icon: FaHandHoldingMedical,
+      label: "Pending Donations",
+    },
+    {
+      to: "/organization/consumers",
+      icon: FaHandHoldingMedical,
+      label: "Consumers",
+    },
+    { to: "/organization/analytics", icon: FaHospital, label: "Analytics" },
   ];
 
   const renderMenuItems = (menuItems) => {

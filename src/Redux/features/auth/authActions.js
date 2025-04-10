@@ -24,7 +24,7 @@ export const userLogin = createAsyncThunk(
           window.location.replace("/hospital");
         }
         else if(data.user.role==="organisation"){
-          window.location.replace("/organisation");
+          window.location.replace("/organization");
         }
         
       }

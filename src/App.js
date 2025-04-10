@@ -1,30 +1,42 @@
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import HomePage from "./Pages/HomePage";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./Component/Routes/ProtectedRoute";
 import PublicRoute from "./Component/Routes/PublicRoute";
+
+// Donar
 import Donar from "./Pages/Donar/Donar";
 import Donation from "./Pages/Donar/Donation";
+import PaymentPage from "./Pages/Donar/paymentPage";
+import Donate from "./Pages/Donar/Donate";
+import Purchase from "./Pages/Donar/Purchase";
+import HospitalBloodStock from "./Pages/Donar/Analytics";
+
+//admin
+
 import DonarList from "./Pages/Admin/DonarList";
 import HospitalList from "./Pages/Admin/HospitalList";
 import OrgList from "./Pages/Admin/OrgList";
 import AdminHome from "./Pages/Admin/AdminHome";
-import PaymentPage from "./Pages/Donar/paymentPage";
-import Donate from "./Pages/Donar/Donate";
-import Purchase from "./Pages/Donar/Purchase";
-import HosAnalytics from "./Pages/Hospital/Analytics";
 import AdminAnalytics from "./Pages/Admin/AdminAnalytics";
+
+// hospital
+import HosAnalytics from "./Pages/Hospital/Analytics";
 import HospitalHome from "./Pages/Hospital/Hospital";
-import OrganizationDonation from "./Pages/Hospital/organisation-donation";
-import HospitalBloodStock from "./Pages/Donar/Analytics";
+import OrgDonations from "./Pages/Hospital/OrganizationDonation";
+import Consumer from "./Pages/Hospital/Consumer";
+
+// organization
 import OrganizationAnalytics from "./Pages/Organization/orgAnalytics";
 import OrganizationConsumers from "./Pages/Organization/orgConsumers";
 import OrganisationHomePage from "./Pages/Organization/orgHome";
 import OrganizationDonar from "./Pages/Organization/orgDonors";
-import Consumer from "./Pages/Hospital/Consumer";
+import OrganizationDonations from "./Pages/Organization/orgDonations";
+import PendingDonations from "./Pages/Organization/pendingDonations";
 
 function App() {
   return (
@@ -32,125 +44,11 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminHome />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/donar-list"
-          element={
-            <ProtectedRoute>
-              <DonarList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/hospital-list"
-          element={
-            <ProtectedRoute>
-              <HospitalList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/org-list"
-          element={
-            <ProtectedRoute>
-              <OrgList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/hospital"
-          element={
-            <ProtectedRoute>
-              <HospitalHome />
-            </ProtectedRoute>
-          }
-        />
-         <Route
-          path="/consumer"
-          element={
-            <ProtectedRoute>
-              <Consumer />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin-analytics"
-          element={
-            <ProtectedRoute>
-              <AdminAnalytics />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/hos-analytics"
-          element={
-            <ProtectedRoute>
-              <HospitalBloodStock />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/donation"
-          element={
-            <ProtectedRoute>
-              <Donation />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/organisation"
-          element={
-            <ProtectedRoute>
-              <OrganisationHomePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/organisation-list"
-          element={
-            <ProtectedRoute>
-              <OrganisationHomePage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/get-orgnaisation-for-hospital"
-          element={
-            <ProtectedRoute>
-              <OrganizationDonation />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/donar"
-          element={
-            <ProtectedRoute>
-              <Donar />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/"
           element={
             <PublicRoute>
               <HomePage />
             </PublicRoute>
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <PaymentPage />
-            </ProtectedRoute>
           }
         />
         <Route
@@ -169,8 +67,25 @@ function App() {
             </PublicRoute>
           }
         />
+        // donars
         <Route
-          path="/donate"
+          path="/donar"
+          element={
+            <ProtectedRoute>
+              <Donar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/donor/donation"
+          element={
+            <ProtectedRoute>
+              <Donation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/donor/donate"
           element={
             <ProtectedRoute>
               <Donate />
@@ -178,7 +93,7 @@ function App() {
           }
         />
         <Route
-          path="/purchase"
+          path="/donor/purchase"
           element={
             <ProtectedRoute>
               <Purchase />
@@ -186,7 +101,73 @@ function App() {
           }
         />
         <Route
-          path="/hospital-analytics"
+          path="/donor/analytics"
+          element={
+            <ProtectedRoute>
+              <HospitalBloodStock />
+            </ProtectedRoute>
+          }
+        />
+        // admin
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminHome />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="admin/donars"
+          element={
+            <ProtectedRoute>
+              <DonarList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/hospitals"
+          element={
+            <ProtectedRoute>
+              <HospitalList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/organizations"
+          element={
+            <ProtectedRoute>
+              <OrgList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/analytics"
+          element={
+            <ProtectedRoute>
+              <AdminAnalytics />
+            </ProtectedRoute>
+          }
+        />
+        // Hospitals
+        <Route
+          path="/hospital"
+          element={
+            <ProtectedRoute>
+              <HospitalHome />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital/consumer"
+          element={
+            <ProtectedRoute>
+              <Consumer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital/analytics"
           element={
             <ProtectedRoute>
               <HosAnalytics />
@@ -194,16 +175,48 @@ function App() {
           }
         />
         <Route
-          path="/orgdonors"
+          path="/hospital/organizations"
+          element={
+            <ProtectedRoute>
+              <OrgDonations />
+            </ProtectedRoute>
+          }
+        />
+        // organizations
+        <Route
+          path="/organization"
+          element={
+            <ProtectedRoute>
+              <OrganisationHomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/organization/donor"
           element={
             <ProtectedRoute>
               <OrganizationDonar />
             </ProtectedRoute>
           }
         />
-
         <Route
-          path="/orgconsumers"
+          path="/organization/donations"
+          element={
+            <ProtectedRoute>
+              <OrganizationDonations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/organization/donationrequests"
+          element={
+            <ProtectedRoute>
+              <PendingDonations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/organization/consumers"
           element={
             <ProtectedRoute>
               <OrganizationConsumers />
@@ -211,10 +224,18 @@ function App() {
           }
         />
         <Route
-          path="/organalytics"
+          path="/organization/analytics"
           element={
             <ProtectedRoute>
               <OrganizationAnalytics />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <ProtectedRoute>
+              <PaymentPage />
             </ProtectedRoute>
           }
         />

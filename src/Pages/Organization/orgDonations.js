@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { FiUsers, FiDroplet, FiCalendar, FiMail, FiUser } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 
-const OrganizationDonar = () => {
+const OrganizationDonations = () => {
   const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
   const [orgName, setOrgName] = useState("");
@@ -17,7 +17,7 @@ const OrganizationDonar = () => {
     try {
       setIsLoading(true);
       if (user) {
-        const res = await API.post("/organisation/get-donar", {
+        const res = await API.post("/organisation/get-donations", {
           id: user._id,
         });
         if (res.data.success) {
@@ -39,7 +39,7 @@ const OrganizationDonar = () => {
   const filteredData = data.filter((donor) =>
     donor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     donor.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    donor.address.toLowerCase().includes(searchTerm.toLowerCase())
+    donor.bloodGroup.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getBloodGroupColor = (bloodGroup) => {
@@ -100,18 +100,20 @@ const OrganizationDonar = () => {
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <div className="flex items-center">
-                        <FiDroplet className="mr-2" /> Email
-                      </div>
-                    </th>
-                
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <div className="flex items-center">
-                        <FiMail className="mr-2" /> Contact
+                        <FiDroplet className="mr-2" /> Blood Group
                       </div>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Quantity (ml)
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <div className="flex items-center">
-                        <FiCalendar className="mr-2" /> Address
+                        <FiMail className="mr-2" /> Email
+                      </div>
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <div className="flex items-center">
+                        <FiCalendar className="mr-2" /> Donation Date
                       </div>
                     </th>
                   </tr>
@@ -153,15 +155,17 @@ const OrganizationDonar = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getBloodGroupColor(record.bloodGroup)}`}>
-                            {record.email}
+                            {record.bloodGroup}
                           </span>
                         </td>
-                       
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {record.phone}
+                          <span className="font-medium">{record.quantity} ml</span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {record.address}
+                          {record.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {moment(record.donatedAt).format("MMM D, YYYY h:mm A")}
                         </td>
                       </tr>
                     ))
@@ -199,4 +203,4 @@ const OrganizationDonar = () => {
   );
 };
 
-export default OrganizationDonar;
+export default OrganizationDonations;
