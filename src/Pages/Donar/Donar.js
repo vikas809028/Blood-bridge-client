@@ -112,7 +112,7 @@ const Donor = () => {
             </div>
 
             <Link
-              to="/donate"
+              to="/donor/donate"
               className="inline-block px-8 py-3 text-lg font-bold text-white transition-all duration-300 transform bg-red-600 rounded-lg shadow-lg hover:bg-red-700 hover:scale-105 hover:shadow-xl pulse-hover fade-in-delay-3"
             >
               Become a Donor Now

@@ -5,7 +5,7 @@ import API from "../../Services/API";
 import { useSelector } from "react-redux";
 import { jsPDF } from "jspdf";
 
-const Donation = () => {
+const DonorOrders = () => {
   const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const Donation = () => {
     try {
       setLoading(true);
       if (user && user._id) {
-        const { data } = await API.post("/donor/get-record", {
+        const { data } = await API.post("/donor/orders", {
           id: user?._id,
         });
         if (data?.success) {
@@ -26,41 +26,6 @@ const Donation = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateCertificate = (record) => {
-    const doc = new jsPDF("l", "mm", "a4");
-    const orgName = record.organisation?.organisationName || "BloodBank";
-
-    doc.setFillColor(255, 235, 238);
-    doc.rect(0, 0, 297, 210, "F");
-
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(220, 38, 38);
-    doc.setFontSize(36);
-    doc.text("BloodBridge", 105, 40);
-
-    doc.setFontSize(24);
-    doc.setTextColor(33, 33, 33);
-    doc.text("Certificate of Appreciation", 90, 60);
-
-    doc.setFontSize(16);
-    doc.text("This certificate is proudly presented to", 90, 80);
-    doc.setFontSize(22);
-    doc.setTextColor(220, 38, 38);
-    doc.text(user?.name || "Donor", 90, 95);
-
-    doc.setFontSize(14);
-    doc.setTextColor(33, 33, 33);
-    doc.text(`In recognition of your noble donation of`, 90, 110);
-    doc.text(`${record.quantity} ML of ${record.bloodGroup} blood`, 90, 120);
-    doc.text(`Donated to: ${orgName}`, 90, 130);
-    doc.text(`Date: ${moment(record.createdAt).format("DD MMM YYYY")}`, 90, 140);
-
-    doc.line(90, 155, 190, 155);
-    doc.text("Authorized Signature", 130, 162);
-
-    doc.save(`blood-donation-certificate-${user?.name || "donor"}.pdf`);
   };
 
   useEffect(() => {
@@ -158,7 +123,7 @@ const Donation = () => {
                     Blood Group
                   </th>
                   <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-red-700 uppercase">
-                    Organization
+                    Hospital
                   </th>
                   <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-red-700 uppercase">
                     Quantity
@@ -166,9 +131,7 @@ const Donation = () => {
                   <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-red-700 uppercase">
                     Date & Time
                   </th>
-                  <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-red-700 uppercase">
-                    Status
-                  </th>
+             
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -203,7 +166,7 @@ const Donation = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                        {record.organisation?.organisationName || "N/A"}
+                        {record.hospital?.hospitalName || "N/A"}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700">
                         <span className="font-semibold text-red-600">
@@ -229,18 +192,6 @@ const Donation = () => {
                             "DD MMM YYYY, hh:mm A"
                           )}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm whitespace-nowrap">
-                        {record.isCollectedByorg ? (
-                          <button 
-                            className="certificate-btn"
-                            onClick={() => generateCertificate(record)}
-                          >
-                            Generate Certificate
-                          </button>
-                        ) : (
-                          <span className="status-text">In Progress</span>
-                        )}
                       </td>
                     </tr>
                   ))
@@ -303,4 +254,4 @@ const Donation = () => {
   );
 };
 
-export default Donation;
+export default DonorOrders;

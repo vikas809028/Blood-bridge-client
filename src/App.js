@@ -37,6 +37,8 @@ import OrganisationHomePage from "./Pages/Organization/orgHome";
 import OrganizationDonar from "./Pages/Organization/orgDonors";
 import OrganizationDonations from "./Pages/Organization/orgDonations";
 import PendingDonations from "./Pages/Organization/pendingDonations";
+import Orders from "./Pages/Hospital/Orders";
+import DonorOrders from "./Pages/Donar/Orders";
 
 function App() {
   return (
@@ -84,6 +86,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+         <Route
+          path="/donor/orders"
+          element={
+            <ProtectedRoute>
+              <DonorOrders />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/donor/donate"
           element={
@@ -100,14 +110,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/donor/analytics"
-          element={
-            <ProtectedRoute>
-              <HospitalBloodStock />
-            </ProtectedRoute>
-          }
-        />
+        
         // admin
         <Route
           path="/admin"
@@ -149,6 +152,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/hos-analytics"
+          element={
+            <ProtectedRoute>
+              <HospitalBloodStock />
+            </ProtectedRoute>
+          }
+        />
         // Hospitals
         <Route
           path="/hospital"
@@ -163,6 +174,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Consumer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
             </ProtectedRoute>
           }
         />

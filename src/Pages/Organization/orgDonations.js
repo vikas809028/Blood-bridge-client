@@ -63,7 +63,7 @@ const OrganizationDonations = () => {
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
               <FiUsers className="inline mr-2" />
-              Donors for <span className="text-blue-600">{orgName || "your organization"}</span>
+              Donotions for <span className="text-blue-600">{orgName || "your organization"}</span>
             </h1>
             <p className="text-gray-600 mt-2">
               View and manage all blood donation records

@@ -16,9 +16,10 @@ const Sidebar = () => {
   const donorMenu = [
     { to: "/donar", icon: FaBuilding, label: "Home" },
     { to: "/donor/donation", icon: FaBuilding, label: "Donation" },
+    { to: "/donor/orders", icon: FaBuilding, label: "Orders" },
     { to: "/donor/donate", icon: FaBuilding, label: "Donate" },
     { to: "/donor/purchase", icon: FaBuilding, label: "Purchase" },
-    { to: "/donor/analytics", icon: FaBuilding, label: "Analytics" },
+    
   ];
 
   const adminMenu = [
@@ -35,11 +36,13 @@ const Sidebar = () => {
       label: "Organisation List",
     },
     { to: "/admin/analytics", icon: FaBuilding, label: "Analytics" },
+    { to: "/admin/hos-analytics", icon: FaBuilding, label: "Hospital Analytics" },
   ];
 
   const hospitalMenu = [
     { to: "/hospital", icon: FaBuilding, label: "Home" },
-    { to: "/hospital/consumer", icon: FaBuilding, label: "consumer" },
+    { to: "/hospital/consumer", icon: FaBuilding, label: "consumers" },
+    { to: "/hospital/orders", icon: FaBuilding, label: "My Orders" },
     { to: "/hospital/analytics", icon: FaBuilding, label: "Analytics" },
     {
       to: "/hospital/organizations",

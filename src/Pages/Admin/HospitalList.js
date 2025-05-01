@@ -216,9 +216,7 @@ const HospitalList = () => {
                                 <div className="text-sm font-medium text-gray-900">
                                   {record.hospitalName}
                                 </div>
-                                <div className="text-xs text-gray-500">
-                                  ID: {record._id.substring(18, 24).toUpperCase()}
-                                </div>
+                                
                               </div>
                             </div>
                           </td>
@@ -245,16 +243,7 @@ const HospitalList = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div className="flex justify-end space-x-2">
-                              <motion.button
-                                data-tooltip-id="edit-tooltip"
-                                data-tooltip-content="Edit Hospital"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => alert("Edit functionality would go here")}
-                                className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
-                              >
-                                <FiEdit2 className="mr-1" /> Edit
-                              </motion.button>
+                              
                               <motion.button
                                 data-tooltip-id="delete-tooltip"
                                 data-tooltip-content="Delete Hospital"

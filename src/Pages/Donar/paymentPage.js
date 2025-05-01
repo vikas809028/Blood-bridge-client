@@ -103,7 +103,7 @@ const Payment = () => {
   
             if (verifyResponse.data.success) {
               toast.success("Payment successful! Blood has been allocated.");
-              navigate("/hos-analytics");
+              navigate("/donor/orders");
             } else {
               toast.error("Payment verification failed. Contact support.");
             }
@@ -212,12 +212,12 @@ const Payment = () => {
 
                 <div className="flex justify-between items-center pb-4 border-b border-gray-200">
                   <span className="text-gray-600">Price per unit:</span>
-                  <span className="font-medium">₹{price}</span>
+                  <span className="font-medium">₹{price/100}</span>
                 </div>
 
                 <div className="flex justify-between items-center pt-2">
                   <span className="text-lg font-semibold">Total Amount:</span>
-                  <span className="text-2xl font-bold text-red-600">₹{amount}</span>
+                  <span className="text-2xl font-bold text-red-600">₹{amount/100}</span>
                 </div>
               </div>
 
